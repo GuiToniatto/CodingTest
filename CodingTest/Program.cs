@@ -1,4 +1,5 @@
 using CodingTest.Data;
+using CodingTest.Repositories.Student;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddDbContext<CodingTestContext>(options =>
         builder.Configuration.GetConnectionString("CodingTestConnection")
     )
 );
+
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
 var app = builder.Build();
 
