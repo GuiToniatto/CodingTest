@@ -1,21 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CodingTest.Repositories.Course;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using StudentModel = CodingTest.Models.Student;
-using CodingTest.Repositories.Student;
+using ModelCourse = CodingTest.Models.Course;
 
-namespace CodingTest.Pages.Student
+namespace CodingTest.Pages.Course
 {
     public class DeleteModel : PageModel
     {
-        private readonly IStudentRepository _repository;
+        private readonly ICourseRepository _repository;
 
-        public DeleteModel(IStudentRepository repository)
+        public DeleteModel(ICourseRepository repository)
         {
             _repository = repository;
         }
 
         [BindProperty]
-        public StudentModel Student { get; set; }
+        public ModelCourse Course { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -24,16 +24,17 @@ namespace CodingTest.Pages.Student
                 return NotFound();
             }
 
-            var student = await _repository.GetStudentById(id);
+            var course = await _repository.GetCourseById(id);
 
-            if (student == null)
+            if (course == null)
             {
                 return NotFound();
             }
             else 
             {
-                Student = student;
+                Course = course;
             }
+
             return Page();
         }
 
@@ -43,12 +44,13 @@ namespace CodingTest.Pages.Student
             {
                 return NotFound();
             }
-            var student = await _repository.GetStudentById(id);
 
-            if (student != null)
+            var course = await _repository.GetCourseById(id);
+
+            if (course != null)
             {
-                Student = student;
-                await _repository.DeleteStudentAsync(Student);
+                Course = course;
+                await _repository.DeleteCourseAsync(Course);
             }
 
             return RedirectToPage("./Index");

@@ -2,15 +2,15 @@
 @model CodingTest.Pages.Student.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Remover";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<h1>Remover</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem certeza que deseja remover este estudante?</h3>
 <div>
-    <h4>Student</h4>
+    <h4>Estudante</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -42,7 +42,7 @@
     <form method="post">
         <input type="hidden" asp-for="Student.Id" />
         <div class="form-group form-footer">
-            <input type="submit" value="Delete" class="project-btn btn-delete" /> ||
+            <input type="submit" value="Remover" class="project-btn btn-delete" /> ||
             <a asp-page="Index" class="project-btn btn-return">
                 Voltar
             </a>

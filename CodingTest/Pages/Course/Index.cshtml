@@ -1,0 +1,58 @@
+﻿@page
+@model CodingTest.Pages.Course.IndexModel
+
+@{
+    ViewData["Title"] = "Cursos";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Cursos</h1>
+
+<p>
+    <a asp-page="Create" class="project-btn btn-create">
+        <i class="bi bi-plus-circle"></i>
+        Adicionar
+    </a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].Duration)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Course) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td style="display: flex;justify-content: space-evenly;align-items: center;gap: 5px;">
+                <a asp-page="./Edit" asp-route-id="@item.Id" class="project-btn btn-edit">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <a asp-page="./Details" asp-route-id="@item.Id" class="project-btn btn-show">
+                    <i class="bi bi-eye-fill"></i>
+                </a>
+                <a asp-page="./Delete" asp-route-id="@item.Id" class="project-btn btn-delete">
+                    <i class="bi bi-trash3-fill"></i>
+                </a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

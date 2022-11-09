@@ -29,6 +29,9 @@ namespace CodingTest.Pages.Student
                 return Page();
             }
 
+            Student.CreatedAt = DateTime.Now;
+            Student.UpdatedAt = DateTime.Now;
+
             await _repository.CreateStudentAsync(Student);
 
             return RedirectToPage("./Index");

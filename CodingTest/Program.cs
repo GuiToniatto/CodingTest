@@ -1,4 +1,5 @@
 using CodingTest.Data;
+using CodingTest.Repositories.Course;
 using CodingTest.Repositories.Student;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<CodingTestContext>(options =>
 );
 
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 
 var app = builder.Build();
 
