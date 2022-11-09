@@ -31,8 +31,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="Student.Phone" class="control-label"></label>
-                <input asp-for="Student.Phone" class="form-control" id="phoneNumber" />
+                <input asp-for="Student.Phone" class="form-control" />
                 <span asp-validation-for="Student.Phone" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="form-group">
+                <label asp-for="Student.StudentCourses" class="control-label"></label>
+                <select asp-for="Student.StudentCourses" class="form-control" multiple >
+                    @foreach(var item in Model.Courses)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
             </div>
             <div class="form-group form-footer">
                 <input type="submit" value="Adicionar" class="project-btn btn-create" />

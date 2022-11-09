@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodingTest.Migrations
 {
     [DbContext(typeof(CodingTestContext))]
-    [Migration("20221108213841_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20221109192005_FirstMigrations")]
+    partial class FirstMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace CodingTest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Course");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("CodingTest.Models.Student", b =>
@@ -115,13 +115,13 @@ namespace CodingTest.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentCourse");
+                    b.ToTable("StudentCourses");
                 });
 
             modelBuilder.Entity("CodingTest.Models.StudentCourse", b =>
                 {
                     b.HasOne("CodingTest.Models.Course", "Course")
-                        .WithMany()
+                        .WithMany("StudentCourses")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -135,6 +135,11 @@ namespace CodingTest.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("CodingTest.Models.Course", b =>
+                {
+                    b.Navigation("StudentCourses");
                 });
 
             modelBuilder.Entity("CodingTest.Models.Student", b =>

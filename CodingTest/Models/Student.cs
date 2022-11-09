@@ -36,7 +36,8 @@ namespace CodingTest.Models
         [Required(ErrorMessage = "Campo {0} é obrigatório.")]
         [DisplayName("Telefone")]
         public string Phone { get; set; }
-        public List<StudentCourse>? StudentCourses { get; set; }
+        [DisplayName("Cursos")]
+        public virtual List<StudentCourse>? StudentCourses { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

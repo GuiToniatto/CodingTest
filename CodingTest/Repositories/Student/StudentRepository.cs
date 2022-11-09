@@ -12,10 +12,11 @@ namespace CodingTest.Repositories.Student
             _context = context;
         }
 
-        public async Task CreateStudentAsync(Models.Student student)
+        public async Task<Models.Student> CreateStudentAsync(Models.Student student)
         {
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
+            return student;
         }
 
         public async Task DeleteStudentAsync(Models.Student student)

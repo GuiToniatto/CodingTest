@@ -30,8 +30,9 @@ namespace CodingTest.Models
         public string Description { get; set; }
         [Required(ErrorMessage = "Campo {0} obrigatório.")]
         [Range(1, int.MaxValue, ErrorMessage = "Insira um número maior ou igual a {1}")]
-        [DisplayName("Duração")]
+        [DisplayName("Semestres")]
         public int Duration { get; set; }
+        public virtual List<StudentCourse>? StudentCourses { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

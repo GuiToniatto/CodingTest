@@ -6,7 +6,7 @@ namespace CodingTest.Repositories.Student
     {
         public Task<List<StudentModel>> GetAllStudents();
         public Task<StudentModel> GetStudentById(int id);
-        public Task CreateStudentAsync(StudentModel student);
+        public Task<StudentModel> CreateStudentAsync(StudentModel student);
         public Task UpdateStudentAsync(StudentModel student);
         public Task DeleteStudentAsync(StudentModel student);
     }
