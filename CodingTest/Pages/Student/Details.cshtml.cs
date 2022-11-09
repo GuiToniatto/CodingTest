@@ -7,28 +7,29 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using CodingTest.Data;
 using StudentModel = CodingTest.Models.Student;
+using CodingTest.Repositories.Student;
 
 namespace CodingTest.Pages.Student
 {
     public class DetailsModel : PageModel
     {
-        private readonly CodingTest.Data.CodingTestContext _context;
+        private readonly IStudentRepository _repository;
 
-        public DetailsModel(CodingTest.Data.CodingTestContext context)
+        public DetailsModel(IStudentRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
       public StudentModel Student { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Students.FirstOrDefaultAsync(m => m.Id == id);
+            var student = await _repository.GetStudentById(id);
             if (student == null)
             {
                 return NotFound();

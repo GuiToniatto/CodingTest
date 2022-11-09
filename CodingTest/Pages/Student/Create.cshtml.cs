@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using CodingTest.Data;
 using StudentModel = CodingTest.Models.Student;
+using CodingTest.Repositories.Student;
 
 namespace CodingTest.Pages.Student
 {
     public class CreateModel : PageModel
     {
-        private readonly CodingTest.Data.CodingTestContext _context;
+        private readonly IStudentRepository _repository;
 
-        public CreateModel(CodingTest.Data.CodingTestContext context)
+        public CreateModel(IStudentRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public IActionResult OnGet()
@@ -26,18 +21,15 @@ namespace CodingTest.Pages.Student
 
         [BindProperty]
         public StudentModel Student { get; set; }
-        
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Students.Add(Student);
-            await _context.SaveChangesAsync();
+            await _repository.CreateStudentAsync(Student);
 
             return RedirectToPage("./Index");
         }

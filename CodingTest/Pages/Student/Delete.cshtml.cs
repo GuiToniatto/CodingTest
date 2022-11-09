@@ -7,29 +7,31 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using CodingTest.Data;
 using StudentModel = CodingTest.Models.Student;
+using CodingTest.Repositories.Student;
+using NuGet.Protocol.Core.Types;
 
 namespace CodingTest.Pages.Student
 {
     public class DeleteModel : PageModel
     {
-        private readonly CodingTest.Data.CodingTestContext _context;
+        private readonly IStudentRepository _repository;
 
-        public DeleteModel(CodingTest.Data.CodingTestContext context)
+        public DeleteModel(IStudentRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         [BindProperty]
-      public StudentModel Student { get; set; }
+        public StudentModel Student { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Students.FirstOrDefaultAsync(m => m.Id == id);
+            var student = await _repository.GetStudentById(id);
 
             if (student == null)
             {
@@ -42,19 +44,18 @@ namespace CodingTest.Pages.Student
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var student = await _context.Students.FindAsync(id);
+            var student = await _repository.GetStudentById(id);
 
             if (student != null)
             {
                 Student = student;
-                _context.Students.Remove(Student);
-                await _context.SaveChangesAsync();
+                await _repository.DeleteStudentAsync(Student);
             }
 
             return RedirectToPage("./Index");

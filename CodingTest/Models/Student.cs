@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CodingTest.Models
 {
@@ -14,18 +16,27 @@ namespace CodingTest.Models
             Lastname = lastname;
             Email = email;
             Phone = phone;
+            CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo {0} é obrigatório.")]
+        [DisplayName("Nome")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo {0} é obrigatório.")]
+        [DisplayName("Sobrenome")]
         public string Lastname { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo {0} é obrigatório.")]
+        [EmailAddress(ErrorMessage = "Formato de e-mail inválido.")]
+        [DisplayName("E-mail")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo {0} é obrigatório.")]
+        [DisplayName("Telefone")]
         public string Phone { get; set; }
-        public List<StudentCourse> StudentCourses { get; set; }
+        public List<StudentCourse>? StudentCourses { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

@@ -1,36 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CodingTest.Data;
 using StudentModel = CodingTest.Models.Student;
+using CodingTest.Repositories.Student;
 
 namespace CodingTest.Pages.Student
 {
     public class EditModel : PageModel
     {
-        private readonly CodingTest.Data.CodingTestContext _context;
+        private readonly IStudentRepository _repository;
 
-        public EditModel(CodingTest.Data.CodingTestContext context)
+        public EditModel(IStudentRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         [BindProperty]
         public StudentModel Student { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var student =  await _context.Students.FirstOrDefaultAsync(m => m.Id == id);
+            var student = await _repository.GetStudentById(id);
             if (student == null)
             {
                 return NotFound();
@@ -39,8 +34,6 @@ namespace CodingTest.Pages.Student
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -48,15 +41,15 @@ namespace CodingTest.Pages.Student
                 return Page();
             }
 
-            _context.Attach(Student).State = EntityState.Modified;
+            Student.UpdatedAt = DateTime.Now;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _repository.UpdateStudentAsync(Student);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
-                if (!StudentExists(Student.Id))
+                if (_repository.GetStudentById(Student.Id) == null)
                 {
                     return NotFound();
                 }
@@ -67,11 +60,6 @@ namespace CodingTest.Pages.Student
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool StudentExists(int id)
-        {
-          return _context.Students.Any(e => e.Id == id);
         }
     }
 }

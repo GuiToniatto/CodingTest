@@ -2,14 +2,17 @@
 @model CodingTest.Pages.Student.IndexModel
 
 @{
-    ViewData["Title"] = "Students";
+    ViewData["Title"] = "Estudantes";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Estudantes</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create" class="project-btn btn-create">
+        <i class="bi bi-plus-circle"></i>
+        Adicionar
+    </a>
 </p>
 <table class="table">
     <thead>
@@ -44,10 +47,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Phone)
             </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            <td style="display: flex;justify-content: space-evenly;align-items: center;gap: 5px;">
+                <a asp-page="./Edit" asp-route-id="@item.Id" class="project-btn btn-edit">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <a asp-page="./Details" asp-route-id="@item.Id" class="project-btn btn-show">
+                    <i class="bi bi-eye-fill"></i>
+                </a>
+                <a asp-page="./Delete" asp-route-id="@item.Id" class="project-btn btn-delete">
+                    <i class="bi bi-trash3-fill"></i>
+                </a>
             </td>
         </tr>
     }

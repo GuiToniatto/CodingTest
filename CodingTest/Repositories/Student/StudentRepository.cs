@@ -14,12 +14,14 @@ namespace CodingTest.Repositories.Student
 
         public async Task CreateStudentAsync(Models.Student student)
         {
-            throw new NotImplementedException();
+            _context.Students.Add(student);
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteStudentAsync(Models.Student student)
         {
-            throw new NotImplementedException();
+            _context.Students.Remove(student);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<Models.Student>> GetAllStudents()
@@ -27,9 +29,15 @@ namespace CodingTest.Repositories.Student
             return await _context.Students.ToListAsync();
         }
 
+        public async Task<Models.Student?> GetStudentById(int id)
+        {
+            return await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
+        }
+
         public async Task UpdateStudentAsync(Models.Student student)
         {
-            throw new NotImplementedException();
+            _context.Students.Update(student);
+            await _context.SaveChangesAsync();
         }
     }
 }
